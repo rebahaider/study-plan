@@ -6,16 +6,17 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../Providers/AuthProviders";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { updateProfile } from "firebase/auth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const Register = () => {
 
+    const axiosPublic = useAxiosPublic();
     const [showPassword, setShowPassword] = useState('');
     const navigate = useNavigate();
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
 
     const onSubmit = (data) => {
         console.log(data);
@@ -23,56 +24,60 @@ const Register = () => {
             .then(result => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
-                Swal.fire({
-                    title: "User Successfully Sign Up",
-                    showClass: {
-                        popup: `
-                        animate__animated
-                        animate__fadeInUp
-                        animate__faster
-                      `
-                    },
-                    hideClass: {
-                        popup: `
-                        animate__animated
-                        animate__fadeOutDown
-                        animate__faster
-                      `
-                    }
-                });
-
-                //  update profile
-                updateProfile(result.user, {
-                    displayName: data.name,
-                    photoURL: data.photo,
-                })
-                    .then(() => console.log("profile updated"))
-                    .catch()
-                navigate(location?.state ? location.state : "/")
-
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => {
+                        // create user saved in the database
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    console.log('user created successfully');
+                                    reset();
+                                    Swal.fire({
+                                        title: "User Successfully Sign Up",
+                                        showClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeInUp
+                                        animate__faster
+                                      `
+                                        },
+                                        hideClass: {
+                                            popup: `
+                                        animate__animated
+                                        animate__fadeOutDown
+                                        animate__faster
+                                      `
+                                        }
+                                    });
+                                    navigate(location?.state ? location.state : "/")
+                                }
+                            })
+                    })
+                    .catch(error => {
+                        console.log(error.message);
+                        Swal.fire({
+                            title: "User already exist",
+                            showClass: {
+                                popup: `
+                                animate__animated
+                                animate__fadeInUp
+                                animate__faster
+                              `
+                            },
+                            hideClass: {
+                                popup: `
+                                animate__animated
+                                animate__fadeOutDown
+                                animate__faster
+                              `
+                            }
+                        });
+                    })
             })
-            .catch(error => {
-                console.log(error.message);
-                Swal.fire({
-                    title: "User already exist",
-                    showClass: {
-                        popup: `
-                        animate__animated
-                        animate__fadeInUp
-                        animate__faster
-                      `
-                    },
-                    hideClass: {
-                        popup: `
-                        animate__animated
-                        animate__fadeOutDown
-                        animate__faster
-                      `
-                    }
-                });
-            })
-        reset();
-
     };
 
     return (
@@ -111,9 +116,20 @@ const Register = () => {
                                 </label>
                                 <input type="text" name="photo" {...register("photo", { required: true })} placeholder="Photo URL.." className="input input-bordered" />
                                 {errors.photo && <span className="text-red-600">Photo URL is required</span>}
+
+                            </div>
+                            {/* role field */}
+                            <div className="form-control">
+
+                                <select className="select select-bordered w-full ">
+                                    <option disabled selected>Select Your Role</option>
+                                    <option name="student" {...register("student", { required: true })}>Student</option>
+                                    <option name="tutor" {...register("tutor", { required: true })}>Tutor</option>
+                                    <option name="admin" {...register("admin", { required: true })}>Admin</option>
+                                </select>
                             </div>
                             {/* password field */}
-                            <div className="form-control relative border">
+                            <div className="form-control relative">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
@@ -135,16 +151,8 @@ const Register = () => {
 
                             </div>
                             {/* button */}
-                            <div className="text-center">
-                                <Link to='/login' className="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group">
-                                    <span className="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
-                                    <span className="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
-                                        <span className="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
-                                        <span className="absolute bottom-0 right-0 w-24 h-24 -mr-10 bg-pink-500 rounded-full blur-md"></span>
-                                    </span>
-                                    
-                                    <input className="relative text-white uppercase" type="submit" value="Sign Up" />
-                                </Link>
+                            <div className="form-control mt-6">
+                                <input className="btn bg-[#5BBF96] font-bold" type="submit" value="Sign Up" />
                             </div>
                         </form>
                         <p className="text-center">New Here, Please <Link to="/login" className="underline text-blue-700 font-bold">Log In</Link></p>

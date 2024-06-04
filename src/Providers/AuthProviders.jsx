@@ -17,6 +17,12 @@ const AuthProviders = ({ children }) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     }
+    // update profile
+    const updateUserProfile = (name,photo)=>{
+        return updateUserProfile(auth.currentUser,{
+            displayName:name, photoURL:photo
+        });
+    }
     // user login
     const signInUser = (email, password) => {
         setLoading(true);
@@ -56,6 +62,7 @@ const AuthProviders = ({ children }) => {
         signInUser,
         signInWithGoogle,
         signInWithGithub,
+        updateUserProfile,
         logout
     }
     return (
