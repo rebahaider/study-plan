@@ -3,13 +3,16 @@ import StudySectionCard from './StudySectionCard';
 
 const StudySection = () => {
 
-    const { data } = useQuery({
+    const { isPending, data } = useQuery({
         queryKey: ['studyServices'],
         queryFn: async () => {
             const res = await fetch('http://localhost:5000/studyServices');
             return res.json();
         }
     });
+    if (isPending) {
+        return <span className="loading loading-spinner loading-lg text-error"></span>
+    }
 
     return (
         <div>
