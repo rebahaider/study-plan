@@ -1,12 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 
 
 const AllStudyInfo = () => {
 
     const { id } = useParams();
-    console.log(id);
+    const [disable, setDisable] = useState(false);
+    const bookNowButton = () => {
+        const currentTime = new Date();
+        if (currentTime>registration_end_date){
+            setDisable(true);
+        }
+    };
 
 
     const { isPending, data } = useQuery({
@@ -27,7 +34,7 @@ const AllStudyInfo = () => {
 
     return (
         <div>
-            <h2 className="text-3xl py-2 mt-4 text-center font-bold uppercase text-[#5BBF96]">Details About {session_title}</h2>
+            <h2 className="text-3xl py-2 mt-4 text-center font-bold uppercase text-[#5BBF96]">Details About "{session_title}"</h2>
             <div className="p-6 m-4 rounded-md shadow-md bg-gray-100 text-gray-900 mx-auto">
                 <div className="mt-6 mb-6">
                     <h2 className="text-xl font-semibold uppercase"><span className="text-2xl">Session Title : </span>{session_title}</h2>
@@ -41,6 +48,12 @@ const AllStudyInfo = () => {
                     <p className="text-gray-800"><span className="text-2xl">Session Duration : </span>{session_duration}</p>
                     <p className="text-gray-800"><span className="text-2xl">Registration Fee : </span>{registration_fee}</p>
                     <p className="text-gray-800"><span className="text-2xl">Student Reviews : </span>{reviews_of_the_study_session_provided_by_students}</p>
+                    <div className="mt-6">
+                        <Link className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300">
+                            <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                            <span className="relative">Book Now</span>
+                        </Link>
+                    </div>
                 </div>
 
             </div>
