@@ -47,8 +47,8 @@ const Navbar = () => {
                         {navLinks}
                     </ul>
                 </div>
-                <img src="/public/logo.jpeg" className="rounded-full w-20 h-20 border-4 mr-4" alt="website logo" />
-                <a className="font-bold text-xl">Collaborative Study Platform</a>
+                <img src="/public/logo.jpeg" className="rounded-full w-10 md:w-20 h-10 md:h-20  border-4 mr-4" alt="website logo" />
+                <a className="font-bold md:text-xl">Collaborative Study Platform</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 gap-6">
@@ -63,21 +63,21 @@ const Navbar = () => {
                                 <div className="dropdown dropdown-end mr-3">
                                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                         <div className="w-10 rounded-full">
-                                            <img alt="User Profile" src={user.photoURL} />
+                                            <img alt="User Profile" src={user?.photoURL} />
                                         </div>
                                     </div>
                                     <ul tabIndex={0} className="mt z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52 text-black">
-                                        <li>Name:{user.displayName}</li>
-                                        <li>Email:{user.email}</li>
+                                        <li>Name:{user?.displayName}</li>
+                                        <li>Email:{user?.email}</li>
                                     </ul>
                                 </div>
                                 {/* dashboard button */}
-                                <Link to='userDashboard/booking' className="px-5 py-2.5 relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block">
+                                <Link to='userDashboard/booking' className="px-1 md:px-5 md:py-2.5 relative rounded group overflow-hidden font-medium bg-purple-50 text-purple-600 inline-block">
                                     <span className="absolute top-0 left-0 flex w-full h-0 mb-0 transition-all duration-200 ease-out transform translate-y-0 bg-purple-600 group-hover:h-full opacity-90"></span>
                                     <span className="relative group-hover:text-white">Dashboard</span>
                                 </Link>
                                 {/* logout button */}
-                                <Link to='/login' className="relative inline-flex items-center justify-center inline-block p-4 px-5 py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group">
+                                <Link to='/login' className="relative inline-flex items-center justify-center inline-block  md:p-4 md:px-5 md:py-3 overflow-hidden font-medium text-indigo-600 rounded-lg shadow-2xl group">
                                     <span className="absolute top-0 left-0 w-40 h-40 -mt-10 -ml-3 transition-all duration-700 bg-red-500 rounded-full blur-md ease"></span>
                                     <span className="absolute inset-0 w-full h-full transition duration-700 group-hover:rotate-180 ease">
                                         <span className="absolute bottom-0 left-0 w-24 h-24 -ml-10 bg-purple-500 rounded-full blur-md"></span>
