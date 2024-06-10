@@ -1,18 +1,48 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const CreateNotes = () => {
-    const {user} = useContext(AuthContext);
-    
-    const handleNotes = event =>{
+    const { user } = useContext(AuthContext);
+
+    const handleNotes = async (event) => {
         event.preventDefault();
         const form = event.target;
-        const email= form.email.value;
-        const title= form.title.value;
-        const description= form.description.value;
-        const note = {email,title,description};
+        const email = form.email.value;
+        const title = form.title.value;
+        const description = form.description.value;
+        const note = { email, title, description };
         console.log(note);
+
+        // add notes information to the server site
+        try {
+            const res = await axios.post("http://localhost:5000/notes", note);
+            console.log('response', res.data);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Your Notes Successfully Saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+        catch (error) {
+            console.log(error);
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Data not saved",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }
+
     }
+
+
+
+
     return (
         <div>
             <h2>create notes</h2>

@@ -11,6 +11,7 @@ import UserDashboard from "../Layout/UserDashboard";
 import Booking from "../Pages/UserDashboard/Booking";
 import ErrorPages from "../Pages/ErrorPages/ErrorPages";
 import CreateNotes from "../Pages/UserDashboard/CreateNotes";
+import ManageNotes from "../Pages/UserDashboard/ManageNotes";
 
 export const router = createBrowserRouter([
     {
@@ -39,8 +40,12 @@ export const router = createBrowserRouter([
                 element: <Booking></Booking>
             },
             {
-                path: "createNote",
+                path: "notes",
                 element: <CreateNotes></CreateNotes>
+            },
+            {
+                path: "manageNotes",
+                element: <ManageNotes></ManageNotes>
             },
         ]
     },
