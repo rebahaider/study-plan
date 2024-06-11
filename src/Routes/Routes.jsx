@@ -12,6 +12,7 @@ import Booking from "../Pages/UserDashboard/Booking";
 import ErrorPages from "../Pages/ErrorPages/ErrorPages";
 import CreateNotes from "../Pages/UserDashboard/CreateNotes";
 import ManageNotes from "../Pages/UserDashboard/ManageNotes";
+import UpdateNote from "../Pages/UserDashboard/UpdateNote";
 
 export const router = createBrowserRouter([
     {
@@ -47,6 +48,11 @@ export const router = createBrowserRouter([
                 path: "manageNotes",
                 element: <ManageNotes></ManageNotes>
             },
+            {
+                path: "updateNote/:id",
+                element: <UpdateNote></UpdateNote>,
+                loader: ({params})=>fetch(`http://localhost:5000/notes/${params.id}`)
+            }
         ]
     },
     {

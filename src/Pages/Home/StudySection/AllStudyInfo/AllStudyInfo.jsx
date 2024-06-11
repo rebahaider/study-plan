@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 
@@ -8,22 +8,30 @@ const AllStudyInfo = () => {
 
     const { id } = useParams();
     const [disable, setDisable] = useState(false);
-    const bookNowButton = () => {
+
+    const registrationStatus = (registration_end_date) => {
         const currentTime = new Date();
-        if (currentTime>registration_end_date){
-            setDisable(true);
-        }
+        const endDate = registration_end_date;
+        return currentTime > endDate;
     };
 
 
     const { isPending, data } = useQuery({
-        queryKey: ['allStudyInfo'],
+        queryKey: ['allStudyInfo', id],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5000/studyServices/${id}`);
             return res.json();
         }
 
     });
+
+    useEffect(() => {
+        if (data) {
+            const isRegistrationClosed = registrationStatus(data.registration_end_date);
+            setDisable(isRegistrationClosed);
+        }
+    }, [data]);
+
     if (isPending) {
         return <span className="loading loading-spinner loading-lg text-error"></span>
     }
@@ -49,10 +57,17 @@ const AllStudyInfo = () => {
                     <p className="text-gray-800"><span className="text-2xl">Registration Fee : </span>{registration_fee}</p>
                     <p className="text-gray-800"><span className="text-2xl">Student Reviews : </span>{reviews_of_the_study_session_provided_by_students}</p>
                     <div className="mt-6">
-                        <Link className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300">
-                            <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                            <span className="relative">Book Now</span>
-                        </Link>
+                        {
+                            disable ? (
+                                <button className="btn btn-error btn-xs" disabled>Registration Closed</button>
+                            ) : (
+                                <Link className="relative rounded px-5 py-2.5 overflow-hidden group bg-green-500 relative hover:bg-gradient-to-r hover:from-green-500 hover:to-green-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-green-400 transition-all ease-out duration-300">
+                                    <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
+                                    <span className="relative">Book Now</span>
+                                </Link>
+                            )
+                        }
+
                     </div>
                 </div>
 

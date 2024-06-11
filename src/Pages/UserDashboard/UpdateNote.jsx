@@ -2,9 +2,12 @@ import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useLoaderData } from "react-router-dom";
 
-const CreateNotes = () => {
+
+const UpdateNote = () => {
     const { user } = useContext(AuthContext);
+    const {_id,title,description} = useLoaderData()
 
     const handleNotes = async (event) => {
         event.preventDefault();
@@ -17,12 +20,12 @@ const CreateNotes = () => {
 
         // add notes information to the server site
         try {
-            const res = await axios.post("http://localhost:5000/notes", note);
+            const res = await axios.patch(`http://localhost:5000/notes/${_id}`, note);
             console.log('response', res.data);
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Your Notes Successfully Saved",
+                title: "Your Note Updated Successfully",
                 showConfirmButton: false,
                 timer: 1500
             });
@@ -41,7 +44,7 @@ const CreateNotes = () => {
     }
     return (
         <div>
-            <h2 className="text-3xl py-2 mt-4 text-center font-bold uppercase text-[#5BBF96]">create your note</h2>
+           <h2 className="text-3xl py-2 mt-4 text-center font-bold uppercase text-[#5BBF96]">Update your note</h2>
             <div className="bg-base-200">
                 <div className="hero-content flex-col">
                     <div className="card shrink-0 w-full shadow-2xl bg-base-100">
@@ -56,16 +59,16 @@ const CreateNotes = () => {
                                 <label className="label">
                                     <span className="label-text">Title</span>
                                 </label>
-                                <input type="text" name="title" placeholder="title" className="input input-bordered" required />
+                                <input type="text" name="title" defaultValue={title} placeholder="title" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Description</span>
                                 </label>
-                                <input type="text" name="description" placeholder="description" className="input input-bordered" required />
+                                <input type="text" name="description" defaultValue={description} placeholder="description" className="input input-bordered" required />
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn btn-primary">Add Note</button>
+                                <button className="btn btn-accent">Update Note</button>
                             </div>
                         </form>
                     </div>
@@ -75,4 +78,4 @@ const CreateNotes = () => {
     );
 };
 
-export default CreateNotes;
+export default UpdateNote;

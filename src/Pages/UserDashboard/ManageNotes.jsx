@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ManageNotes = () => {
@@ -75,7 +76,7 @@ const ManageNotes = () => {
                                 <td>{noteInfo.title}</td>
                                 <td>{noteInfo.description}</td>
                                 <th>
-                                    <button className="btn btn-accent btn-xs">Update</button>
+                                    <Link to={`/userDashboard/updateNote/${noteInfo._id}`}><button className="btn btn-accent btn-xs">Update</button></Link>
                                 </th>
                                 <th>
                                     <button onClick={() => handleDelete(noteInfo._id)} className="btn btn-error btn-xs">Delete</button>
