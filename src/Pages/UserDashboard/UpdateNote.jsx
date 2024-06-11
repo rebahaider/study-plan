@@ -20,7 +20,7 @@ const UpdateNote = () => {
 
         // add notes information to the server site
         try {
-            const res = await axios.patch(`http://localhost:5000/notes/${_id}`, note);
+            const res = await axios.patch(`assignment-12-server-one-flax.vercel.app/notes/${_id}`, note);
             console.log('response', res.data);
             Swal.fire({
                 position: "top-end",

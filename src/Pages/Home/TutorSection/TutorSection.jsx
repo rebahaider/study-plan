@@ -6,7 +6,7 @@ const TutorSection = () => {
     const { data, isPending } = useQuery({
         queryKey: ['tutorInfo'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/studyServices');
+            const res = await fetch('assignment-12-server-one-flax.vercel.app/studyServices');
             return res.json();
         }
     });

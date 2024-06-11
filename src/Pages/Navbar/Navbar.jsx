@@ -33,8 +33,6 @@ const Navbar = () => {
     }
     const navLinks = <>
         <NavLink to='/'><li className="btn btn-ghost">Home</li></NavLink>
-        <NavLink to='/'><li className="btn btn-ghost">Home</li></NavLink>
-        <NavLink to='/'><li className="btn btn-ghost">Home</li></NavLink>
     </>
     return (
         <div className="navbar bg-[#5BBF96]">

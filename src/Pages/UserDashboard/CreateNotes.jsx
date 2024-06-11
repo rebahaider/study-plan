@@ -17,7 +17,7 @@ const CreateNotes = () => {
 
         // add notes information to the server site
         try {
-            const res = await axios.post("http://localhost:5000/notes", note);
+            const res = await axios.post("assignment-12-server-one-flax.vercel.app/notes", note);
             console.log('response', res.data);
             Swal.fire({
                 position: "top-end",

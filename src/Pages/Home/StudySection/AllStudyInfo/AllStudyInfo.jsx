@@ -19,7 +19,7 @@ const AllStudyInfo = () => {
     const { isPending, data } = useQuery({
         queryKey: ['allStudyInfo', id],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/studyServices/${id}`);
+            const res = await fetch(`assignment-12-server-one-flax.vercel.app/studyServices/${id}`);
             return res.json();
         }
 
