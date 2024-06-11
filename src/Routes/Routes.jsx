@@ -13,6 +13,7 @@ import ErrorPages from "../Pages/ErrorPages/ErrorPages";
 import CreateNotes from "../Pages/UserDashboard/CreateNotes";
 import ManageNotes from "../Pages/UserDashboard/ManageNotes";
 import UpdateNote from "../Pages/UserDashboard/UpdateNote";
+import Payment from "../Pages/UserDashboard/Payment";
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
                 element: <Booking></Booking>
             },
             {
+                path: "payment",
+                element: <Payment></Payment>
+            },
+            {
                 path: "notes",
                 element: <CreateNotes></CreateNotes>
             },
@@ -51,7 +56,7 @@ export const router = createBrowserRouter([
             {
                 path: "updateNote/:id",
                 element: <UpdateNote></UpdateNote>,
-                loader: ({params})=>fetch(`http://localhost:5000/notes/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/notes/${params.id}`)
             }
         ]
     },
