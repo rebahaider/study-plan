@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
             {
                 path: "updateNote/:id",
                 element: <UpdateNote></UpdateNote>,
-                loader: ({ params }) => fetch(`assignment-12-server-one-flax.vercel.app/notes/${params.id}`)
+                loader: ({ params }) => fetch(`https://assignment-12-server-one-flax.vercel.app/notes/${params.id}`)
             }
         ]
     },

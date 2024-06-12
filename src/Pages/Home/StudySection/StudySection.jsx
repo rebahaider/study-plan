@@ -6,7 +6,7 @@ const StudySection = () => {
     const { isPending, data } = useQuery({
         queryKey: ['studyServices'],
         queryFn: async () => {
-            const res = await fetch('assignment-12-server-one-flax.vercel.app/studyServices');
+            const res = await fetch('https://assignment-12-server-one-flax.vercel.app/studyServices');
             return res.json();
         }
     });

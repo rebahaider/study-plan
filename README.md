@@ -1,8 +1,15 @@
-# React + Vite
+# Collaborative Study Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [@live site link: https://assignment-12-66ba7.web.app/]
+
+Features:
+- student can book a a study session
+- add stripe payment system
+- using cookies to handle user login session time
+- student can note about their important subject
+- student can edit their notes
+- student can also delete their notes
+- using react hook form for betterment
+- using jwt and axios 

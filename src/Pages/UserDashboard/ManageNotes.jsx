@@ -18,7 +18,7 @@ const ManageNotes = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const res = await axios.delete(`assignment-12-server-one-flax.vercel.app/notes/${id}`);
+                    const res = await axios.delete(`https://assignment-12-server-one-flax.vercel.app/notes/${id}`);
                     console.log(res.data);
                     if (res.data.deletedCount > 0) {
                         refetch();
@@ -44,7 +44,7 @@ const ManageNotes = () => {
     const { data, isPending, refetch } = useQuery({
         queryKey: ['notes'],
         queryFn: async () => {
-            const res = await fetch('assignment-12-server-one-flax.vercel.app/notes');
+            const res = await fetch('https://assignment-12-server-one-flax.vercel.app/notes');
             return res.json();
         }
     });
